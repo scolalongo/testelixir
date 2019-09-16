@@ -1,0 +1,32 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: testelixir
+  namespace: media-cloud-ai
+  labels:
+    name: testelixir
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: testelixir
+        silo: media_cloud_ai
+    spec:
+      containers:
+      - name: testelixir
+        image: registry.ftven.net/media-cloud-ai/testelixir:0.0.3
+        env:
+        - name: DATABASE_HOSTNAME
+          value: "postgres.media-cloud-ai.svc.cluster.local"
+        - name: DATABASE_PORT
+          value: "5432"
+        - name: DATABASE_USERNAME
+          value: "mediacloudai"
+        - name: DATABASE_PASSWORD
+          value: "mediacloudai"
+        - name: DATABASE_NAME
+          value: "media_cloud_ai"
+      imagePullSecrets:
+      - name: regcred-ftven
